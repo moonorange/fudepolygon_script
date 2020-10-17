@@ -10,10 +10,11 @@ PREFECTURES = ['北海道', '青森県', '岩手県', '宮城県', '秋田県', 
 
 YEAR = '2019'
 
-POLYGON_DOWNLOAD_URL = 'http://www.machimura.maff.go.jp/polygon/'
+BASE_URL = 'http://www.machimura.maff.go.jp/polygon/'
 
-def download_file(url):
+def download_file(url: str) -> str:
     filename = urllib.parse.unquote(url.split('/')[-1])
+    print('downloading {}'.format(filename))
     r = requests.get(url, stream=True)
     with open(filename, 'wb') as f:
         for chunk in r.iter_content(chunk_size=1024):
@@ -31,7 +32,7 @@ def _rename(info: zipfile.ZipInfo) -> None:
     encoding = 'utf-8' if info.flag_bits & LANG_ENC_FLAG else 'cp437'
     info.filename = info.filename.encode(encoding).decode('cp932')
 
-def zip_extract(filename):
+def zip_extract(filename: str) -> None:
     DEST_DIR = 'fude_polygons/'
     zfile = zipfile.ZipFile(filename)
     for info in zfile.infolist():
@@ -41,7 +42,7 @@ def zip_extract(filename):
 def get_fudepolygon_files():
     for idx, pref in enumerate(PREFECTURES):
         encoded_pref = urllib.parse.quote(pref)
-        pref_url = '{}{:02}{}{}.zip'.format(POLYGON_DOWNLOAD_URL, idx + 1, encoded_pref, YEAR)
+        pref_url = '{}{:02}{}{}.zip'.format(BASE_URL, idx + 1, encoded_pref, YEAR)
         file_name = download_file(pref_url)
         if (file_name):
             zip_extract(file_name)
@@ -61,9 +62,10 @@ if __name__ == "__main__":
     HOKKAIDO_DIR = 'fude_polygons/01北海道{}/'.format(YEAR)
     HOKKAIDO_GEO_CODES = ['11', '12', '13']
     for geo_code in HOKKAIDO_GEO_CODES:
-        zfile = zipfile.ZipFile('{}{}系.zip'.format(HOKKAIDO_DIR, geo_code))
-        for info in zfile.infolist():
-            _rename(info)
-            zfile.extract(info, HOKKAIDO_DIR)
-
+        nested_zpath = '{}{}系.zip'.format(HOKKAIDO_DIR, geo_code)
+        if (os.path.exists(nested_zpath)):
+            zfile = zipfile.ZipFile(nested_zpath)
+            for info in zfile.infolist():
+                _rename(info)
+                zfile.extract(info, HOKKAIDO_DIR)
     rm_all_zfiles()
