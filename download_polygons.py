@@ -62,7 +62,7 @@ def rm_zfiles_and_empty_hokkaido():
     os.rmdir(HOKKAIDO_DIR)
 
 if __name__ == "__main__":
-    # get_fudepolygon_files()
+    get_fudepolygon_files()
 
     # 北海道の入れ子になっているzip fileをfudepolygons配下に解凍
     for geo_code in HOKKAIDO_GEO_CODES:
