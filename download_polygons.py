@@ -12,9 +12,11 @@ YEAR = '2019'
 
 BASE_URL = 'http://www.machimura.maff.go.jp/polygon/'
 
+FUDEPOLYGONS_DIR = 'fude_polygons/'
+
 def download_file(url: str) -> str:
     filename = urllib.parse.unquote(url.split('/')[-1])
-    print('downloading {}'.format(filename))
+    print('downloading {} ...'.format(filename))
     r = requests.get(url, stream=True)
     with open(filename, 'wb') as f:
         for chunk in r.iter_content(chunk_size=1024):
@@ -33,11 +35,10 @@ def _rename(info: zipfile.ZipInfo) -> None:
     info.filename = info.filename.encode(encoding).decode('cp932')
 
 def zip_extract(filename: str) -> None:
-    DEST_DIR = 'fude_polygons/'
     zfile = zipfile.ZipFile(filename)
     for info in zfile.infolist():
         _rename(info)
-        zfile.extract(info, DEST_DIR)
+        zfile.extract(info, FUDEPOLYGONS_DIR)
 
 def get_fudepolygon_files():
     for idx, pref in enumerate(PREFECTURES):
@@ -46,7 +47,7 @@ def get_fudepolygon_files():
         file_name = download_file(pref_url)
         if (file_name):
             zip_extract(file_name)
-            print('extracted {}'.format(file_name))
+            print('unzipped {}'.format(file_name))
 
 def rm_all_zfiles():
     for path in glob.glob('./*.zip'):
