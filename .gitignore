@@ -14,7 +14,7 @@ __pycache__/
 .vscode/
 
 # project unique
-fude_polygons/
+fudepolygons/
 
 # C extensions
 *.so

@@ -12,7 +12,10 @@ YEAR = '2019'
 
 BASE_URL = 'http://www.machimura.maff.go.jp/polygon/'
 
-FUDEPOLYGONS_DIR = 'fude_polygons/'
+FUDEPOLYGONS_DIR = 'fudepolygons/'
+
+HOKKAIDO_DIR = 'fudepolygons/01北海道{}/'.format(YEAR)
+HOKKAIDO_GEO_CODES = ['11', '12', '13']
 
 def download_file(url: str) -> str:
     filename = urllib.parse.unquote(url.split('/')[-1])
@@ -49,21 +52,21 @@ def get_fudepolygon_files():
             zip_extract(file_name)
             print('unzipped {}'.format(file_name))
 
-def rm_all_zfiles():
+def rm_zfiles_and_empty_hokkaido():
     for path in glob.glob('./*.zip'):
         os.remove(path)
     # 北海道の中のzipファイル削除
     for path in glob.glob('{}*.zip'.format(HOKKAIDO_DIR)):
         os.remove(path)
+    # 空になった北海道ディレクトリを削除
+    os.remove(HOKKAIDO_DIR)
 
 if __name__ == "__main__":
-    get_fudepolygon_files()
+    # get_fudepolygon_files()
 
-    # 北海道の入れ子になっているzip fileを解凍
-    HOKKAIDO_DIR = 'fude_polygons/01北海道{}/'.format(YEAR)
-    HOKKAIDO_GEO_CODES = ['11', '12', '13']
+    # 北海道の入れ子になっているzip fileをfudepolygons配下に解凍
     for geo_code in HOKKAIDO_GEO_CODES:
         nested_zpath = '{}{}系.zip'.format(HOKKAIDO_DIR, geo_code)
         if (os.path.exists(nested_zpath)):
             zip_extract(nested_zpath)
-    rm_all_zfiles()
+    rm_zfiles_and_empty_hokkaido()
