@@ -65,8 +65,5 @@ if __name__ == "__main__":
     for geo_code in HOKKAIDO_GEO_CODES:
         nested_zpath = '{}{}系.zip'.format(HOKKAIDO_DIR, geo_code)
         if (os.path.exists(nested_zpath)):
-            zfile = zipfile.ZipFile(nested_zpath)
-            for info in zfile.infolist():
-                _rename(info)
-                zfile.extract(info, HOKKAIDO_DIR)
+            zip_extract(nested_zpath)
     rm_all_zfiles()
