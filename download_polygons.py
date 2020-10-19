@@ -84,7 +84,7 @@ def rm_hokkaido_files() -> None:
         os.rmdir(HOKKAIDO_DIR)
 
 if __name__ == "__main__":
-    # get_fudepolygon_files()
+    get_fudepolygon_files()
 
     # 都道府県名を指定してファイルをダウンロードしたい時
     # parser = argparse.ArgumentParser(description='都道府県名と番号を指定して筆ポリゴンファイルをダウンロードするスクリプト')
