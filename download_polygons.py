@@ -87,11 +87,11 @@ if __name__ == "__main__":
     # get_fudepolygon_files()
 
     # 都道府県名を指定してファイルをダウンロードしたい時
-    parser = argparse.ArgumentParser(description='都道府県名と番号を指定して筆ポリゴンファイルをダウンロードするスクリプト')
-    parser.add_argument('arg1', help='都道府県名')
-    parser.add_argument('arg2', type=int, help='番号(1は北海道、47は沖縄)')
-    args = parser.parse_args()
-    get_file_from_arg(args.arg1, args.arg2)
+    # parser = argparse.ArgumentParser(description='都道府県名と番号を指定して筆ポリゴンファイルをダウンロードするスクリプト')
+    # parser.add_argument('arg1', help='都道府県名')
+    # parser.add_argument('arg2', type=int, help='番号(1は北海道、47は沖縄)')
+    # args = parser.parse_args()
+    # get_file_from_arg(args.arg1, args.arg2)
     rm_zfiles()
 
     #　北海道のみの処理
