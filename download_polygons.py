@@ -46,7 +46,7 @@ def unzip_file(filename: str) -> None:
         _rename(info)
         zfile.extract(info, FUDEPOLYGONS_DIR)
 
-def get_fudepolygon_files() -> None:
+def download_fudepolygon_files() -> None:
     for idx, pref in enumerate(PREFECTURES):
         encoded_pref = urllib.parse.quote(pref)
         pref_url = '{}{:02}{}{}.zip'.format(BASE_URL, idx + 1, encoded_pref, YEAR)
@@ -56,7 +56,7 @@ def get_fudepolygon_files() -> None:
             print('unzipped {}'.format(file_name))
 
 #　都道府県名を指定してファイルをダウンロードする関数
-def get_file_from_arg(pref: str, pref_num: int) -> None:
+def download_file_from_arg(pref: str, pref_num: int) -> None:
     encoded_pref = urllib.parse.quote(pref)
     pref_url = '{}{:02}{}{}.zip'.format(BASE_URL, pref_num, encoded_pref, YEAR)
     file_name = download_file(pref_url)
@@ -76,7 +76,7 @@ def unzip_hokkaido_files() -> None:
             unzip_file(nested_zpath)
 
 # 北海道の中のzipファイル削除
-def rm_hokkaido_files() -> None:
+def rm_hokkaido_files_and_dir() -> None:
     for path in glob.glob('{}*.zip'.format(HOKKAIDO_DIR)):
         os.remove(path)
     # 空になった北海道ディレクトリを削除
@@ -84,16 +84,16 @@ def rm_hokkaido_files() -> None:
         os.rmdir(HOKKAIDO_DIR)
 
 if __name__ == "__main__":
-    get_fudepolygon_files()
+    # download_fudepolygon_files()
 
     # 都道府県名を指定してファイルをダウンロードしたい時
     # parser = argparse.ArgumentParser(description='都道府県名と番号を指定して筆ポリゴンファイルをダウンロードするスクリプト')
     # parser.add_argument('arg1', help='都道府県名')
     # parser.add_argument('arg2', type=int, help='番号(1は北海道、47は沖縄)')
     # args = parser.parse_args()
-    # get_file_from_arg(args.arg1, args.arg2)
+    # download_file_from_arg(args.arg1, args.arg2)
     rm_zfiles()
 
     #　北海道のみの処理
     unzip_hokkaido_files()
-    rm_hokkaido_files()
+    rm_hokkaido_files_and_dir()
