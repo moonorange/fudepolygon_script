@@ -8,16 +8,17 @@ import glob
 import re
 import os
 import argparse
+import ipdb
 
 PREFECTURES = ['北海道', '青森県', '岩手県', '宮城県', '秋田県', '山形県', '福島県', '茨城県', '栃木県', '群馬県', '埼玉県', '千葉県', '東京都', '神奈川県', '新潟県', '富山県', '石川県', '福井県', '山梨県', '長野県', '岐阜県', '静岡県', '愛知県', '三重県', '滋賀県', '京都府', '大阪府', '兵庫県', '奈良県', '和歌山県', '鳥取県', '島根県', '岡山県', '広島県', '山口県', '徳島県', '香川県', '愛媛県', '高知県', '福岡県', '佐賀県', '長崎県', '熊本県', '大分県', '宮崎県', '鹿児島県', '沖縄県']
 
-YEAR = '2019'
+YEAR = '2020'
 
 BASE_URL = 'http://www.machimura.maff.go.jp/polygon/'
 
-FUDEPOLYGONS_DIR = 'fudepolygons/'
+FUDEPOLYGONS_DIR = '../../auto_polygon_generator/src/'
 
-HOKKAIDO_DIR = 'fudepolygons/01北海道{}/'.format(YEAR)
+HOKKAIDO_DIR = FUDEPOLYGONS_DIR + '01北海道{}/'.format(YEAR)
 HOKKAIDO_GEO_CODES = ['11', '12', '13']
 
 def download_file(url: str) -> str:
@@ -56,13 +57,14 @@ def download_fudepolygon_files() -> None:
             print('unzipped {}'.format(file_name))
 
 #　都道府県名を指定してファイルをダウンロードする関数
-def download_file_from_arg(pref: str, pref_num: int) -> None:
-    encoded_pref = urllib.parse.quote(pref)
-    pref_url = '{}{:02}{}{}.zip'.format(BASE_URL, pref_num, encoded_pref, YEAR)
-    file_name = download_file(pref_url)
-    if (file_name):
-        unzip_file(file_name)
-        print('unzipped {}'.format(file_name))
+def dwld_files_from_pref_num(pref_num) -> None:
+    for idx in pref_num:
+        encoded_pref = urllib.parse.quote(PREFECTURES[idx - 1])
+        pref_url = '{}{:02}{}{}.zip'.format(BASE_URL, idx, encoded_pref, YEAR)
+        file_name = download_file(pref_url)
+        if (file_name):
+            unzip_file(file_name)
+            print('unzipped {}'.format(file_name))
 
 def rm_zfiles() -> None:
     for path in glob.glob('./*.zip'):
@@ -87,13 +89,16 @@ if __name__ == "__main__":
     # download_fudepolygon_files()
 
     # 都道府県名を指定してファイルをダウンロードしたい時
-    # parser = argparse.ArgumentParser(description='都道府県名と番号を指定して筆ポリゴンファイルをダウンロードするスクリプト')
-    # parser.add_argument('arg1', help='都道府県名')
-    # parser.add_argument('arg2', type=int, help='番号(1は北海道、47は沖縄)')
-    # args = parser.parse_args()
-    # download_file_from_arg(args.arg1, args.arg2)
+    parser = argparse.ArgumentParser(description='番号を指定して筆ポリゴンファイルをダウンロードするスクリプト')
+    parser.add_argument('--mode', help='全都道府県か否か')
+    parser.add_argument('--pref_num', type=int, nargs='*')
+    args = parser.parse_args()
+    if (args.mode == "all"):
+        download_fudepolygon_files()
+    else:
+        dwld_files_from_pref_num(args.pref_num)
     rm_zfiles()
 
-    #　北海道のみの処理
-    unzip_hokkaido_files()
-    rm_hokkaido_files_and_dir()
+    if (args.mode == "all" or 1 in args.pref_num):
+        unzip_hokkaido_files()
+        rm_hokkaido_files_and_dir()
