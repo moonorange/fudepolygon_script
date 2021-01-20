@@ -71,28 +71,25 @@ def dwld_files_from_pref_num(pref_num) -> None:
             print('unzipped {}'.format(file_name))
 
 def rm_zfiles() -> None:
-    for path in glob.glob('./*.zip'):
+    for path in glob.glob('{}*.zip'.format(FUDEPOLYGONS_DIR)):
         os.remove(path)
 
 # 北海道の入れ子になっているzip fileをfudepolygons配下に解凍
-def unzip_hokkaido_files() -> None:
-    for geo_code in HOKKAIDO_GEO_CODES:
-        nested_zpath = '{}{}系.zip'.format(HOKKAIDO_DIR, geo_code)
-        if (os.path.exists(nested_zpath)):
-            unzip_file(nested_zpath)
+# def unzip_hokkaido_files() -> None:
+#     for geo_code in HOKKAIDO_GEO_CODES:
+#         nested_zpath = '{}{}系.zip'.format(HOKKAIDO_DIR, geo_code)
+#         if (os.path.exists(nested_zpath)):
+#             unzip_file(nested_zpath)
 
 # 北海道の中のzipファイル削除
-def rm_hokkaido_files_and_dir() -> None:
-    for path in glob.glob('{}*.zip'.format(HOKKAIDO_DIR)):
-        os.remove(path)
-    # 空になった北海道ディレクトリを削除
-    if (os.path.exists(HOKKAIDO_DIR)):
-        os.rmdir(HOKKAIDO_DIR)
+# def rm_hokkaido_files_and_dir() -> None:
+#     for path in glob.glob('{}*.zip'.format(HOKKAIDO_DIR)):
+#         os.remove(path)
+#     # 空になった北海道ディレクトリを削除
+#     if (os.path.exists(HOKKAIDO_DIR)):
+#         os.rmdir(HOKKAIDO_DIR)
 
 if __name__ == "__main__":
-    # download_fudepolygon_files()
-
-    # 都道府県名を指定してファイルをダウンロードしたい時
     parser = argparse.ArgumentParser(description='番号を指定して筆ポリゴンファイルをダウンロードするスクリプト')
     parser.add_argument('--mode', help='全都道府県か否か')
     parser.add_argument('--pref_num', type=int, nargs='*')
@@ -100,9 +97,6 @@ if __name__ == "__main__":
     if (args.mode == "all"):
         download_fudepolygon_files()
     else:
+        # 都道府県名を指定してファイルをダウンロードしたい時
         dwld_files_from_pref_num(args.pref_num)
     rm_zfiles()
-
-    if (args.mode == "all" or 1 in args.pref_num):
-        unzip_hokkaido_files()
-        rm_hokkaido_files_and_dir()
