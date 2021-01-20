@@ -18,8 +18,8 @@ BASE_URL = 'http://www.machimura.maff.go.jp/polygon/'
 
 FUDEPOLYGONS_DIR = 'fudepolygon_data/'
 
-HOKKAIDO_DIR = FUDEPOLYGONS_DIR + '01北海道{}/'.format(YEAR)
-HOKKAIDO_GEO_CODES = ['11', '12', '13']
+# HOKKAIDO_DIR = FUDEPOLYGONS_DIR + '01北海道{}/'.format(YEAR)
+# HOKKAIDO_GEO_CODES = ['11', '12', '13']
 
 def download_file(url: str) -> str:
     filename = FUDEPOLYGONS_DIR + urllib.parse.unquote(url.split('/')[-1])
