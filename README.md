@@ -1,5 +1,9 @@
 # fudepolygon_script
 
 筆ポリゴンzipファイルをwebからダウンロードし解凍し、最後に不要になったzipファイルを消すスクリプト。
-fudepolygons/配下に全ての都道府県のzipファイルが解凍されたものが残る。
-北海道の入れ子になっているzipもfudepolygons/配下に展開される。
+定数FUDEPOLYGONS_DIR配下に全ての都道府県のzipファイルが解凍されたものが残る。
+北海道の入れ子になっているzipもFUDEPOLYGONS_DIR配下に展開される。
+
+# 注意
+
+URLは2020年のものを前提としている。農水省の更新によってurlが変わるかもしれないためその都度updateする必要がある。
