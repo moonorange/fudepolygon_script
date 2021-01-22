@@ -93,13 +93,13 @@ if __name__ == "__main__":
     args = parser.parse_args()
     if (args.mode == "all"):
         download_fudepolygon_files(0)
-        if (args.gcs == 1):
-            strage_cl = storage.Client()
-            gcs = GcsController(strage_cl)
-            bucket = gcs.create_bucket("COLDLINE", "us-east-1")
-            gcs.upload_data_to_bucket(bucket.name)
     if (args.pref_num):
         # 都道府県名を指定してファイルをダウンロードしたい時
         dwld_files_from_pref_num(args.pref_num)
+    if (args.gcs == 1):
+        strage_cl = storage.Client()
+        gcs = GcsController(strage_cl)
+        bucket = gcs.create_bucket("COLDLINE", "us-east-1")
+        gcs.upload_data_to_bucket(bucket.name)
     if (args.rm):
         rm_zfiles()
