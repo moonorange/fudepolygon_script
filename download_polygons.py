@@ -54,7 +54,7 @@ def download_fudepolygon_files(is_unzip: int) -> None:
             print('unzipped {}'.format(file_name))
 
 #　都道府県名を指定してファイルをダウンロードする関数
-def dwld_files_from_pref_num(pref_num) -> None:
+def dwld_files_from_pref_num(pref_num, is_unzip: int) -> None:
     if not os.path.isdir(FUDEPOLYGONS_DIR):
         os.makedirs(FUDEPOLYGONS_DIR)
     for idx in pref_num:
@@ -87,12 +87,14 @@ def rm_zfiles() -> None:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='番号を指定して筆ポリゴンファイルをダウンロードするスクリプト')
     parser.add_argument('--mode', help='全都道府県か否か')
-    parser.add_argument('--gcs', type=int)
-    parser.add_argument('--rm', type=int, default=0)
     parser.add_argument('--pref_num', type=int, nargs='*')
+    parser.add_argument('--gcs', type=int)
+    parser.add_argument('--unzip', type=int, default=0)
+    parser.add_argument('--rm', type=int, default=0)
     args = parser.parse_args()
+
     if (args.mode == "all"):
-        download_fudepolygon_files(0)
+        download_fudepolygon_files(args.unzip)
     if (args.pref_num):
         # 都道府県名を指定してファイルをダウンロードしたい時
         dwld_files_from_pref_num(args.pref_num)
