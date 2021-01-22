@@ -38,14 +38,14 @@ def unzip_file(filename: str) -> None:
         _rename(info)
         zfile.extract(info, FUDEPOLYGONS_DIR)
 
-def download_fudepolygon_files() -> None:
+def download_fudepolygon_files(is_unzip: int) -> None:
     if not os.path.isdir(FUDEPOLYGONS_DIR):
         os.makedirs(FUDEPOLYGONS_DIR)
     for idx, pref in enumerate(PREFECTURES):
         encoded_pref = urllib.parse.quote(pref)
         pref_url = '{}{:02}{}{}.zip'.format(BASE_URL, idx + 1, encoded_pref, YEAR)
         file_name = download_file(pref_url)
-        if (file_name):
+        if (file_name and is_unzip):
             unzip_file(file_name)
             print('unzipped {}'.format(file_name))
 
@@ -83,16 +83,16 @@ def rm_zfiles() -> None:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='番号を指定して筆ポリゴンファイルをダウンロードするスクリプト')
     parser.add_argument('--mode', help='全都道府県か否か')
-    parser.add_argument('--gcs', type=int, nargs='*')
+    parser.add_argument('--gcs', type=int)
     parser.add_argument('--pref_num', type=int, nargs='*')
     args = parser.parse_args()
-    if (args.mode == "all_dw_pref"):
-        download_fudepolygon_files()
+    if (args.mode == "all"):
+        download_fudepolygon_files(0)
         if (args.gcs == 1):
             gcs = GcsController(storage.Client())
             bucket = gcs.create_bucket("COLDLINE", "us-east-1")
             gcs.upload_data_to_bucket(bucket.name)
-    else:
+    if (args.pref_num):
         # 都道府県名を指定してファイルをダウンロードしたい時
         dwld_files_from_pref_num(args.pref_num)
-    # rm_zfiles()
+    rm_zfiles()

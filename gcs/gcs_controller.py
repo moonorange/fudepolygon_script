@@ -1,5 +1,6 @@
 from google.cloud import storage
 import glob
+from constants import *
 
 BUCKET_NAME = "fudepolygon_2020"
 
@@ -20,6 +21,7 @@ class GcsController:
 	def upload_data_to_bucket(self, bucket_name, source_dir=FUDEPOLYGONS_DIR):
 		bucket = self.storage_cl.bucket(bucket_name)
 		for path in glob.glob(source_dir + "*"):
+			import ipdb;ipdb.set_trace()
 			blob = bucket.blob(path)
 			blob.upload_from_filename(path)
 			print("File {} uploaded to {}.".format(path, path))
