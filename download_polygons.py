@@ -9,17 +9,8 @@ import re
 import os
 import argparse
 import ipdb
-
-PREFECTURES = ['北海道', '青森県', '岩手県', '宮城県', '秋田県', '山形県', '福島県', '茨城県', '栃木県', '群馬県', '埼玉県', '千葉県', '東京都', '神奈川県', '新潟県', '富山県', '石川県', '福井県', '山梨県', '長野県', '岐阜県', '静岡県', '愛知県', '三重県', '滋賀県', '京都府', '大阪府', '兵庫県', '奈良県', '和歌山県', '鳥取県', '島根県', '岡山県', '広島県', '山口県', '徳島県', '香川県', '愛媛県', '高知県', '福岡県', '佐賀県', '長崎県', '熊本県', '大分県', '宮崎県', '鹿児島県', '沖縄県']
-
-YEAR = '（2020公開）'
-
-BASE_URL = 'http://www.machimura.maff.go.jp/polygon/'
-
-FUDEPOLYGONS_DIR = 'fudepolygon_data/'
-
-# HOKKAIDO_DIR = FUDEPOLYGONS_DIR + '01北海道{}/'.format(YEAR)
-# HOKKAIDO_GEO_CODES = ['11', '12', '13']
+from constants import *
+from gcs.gcs_controller import GcsController
 
 def download_file(url: str) -> str:
     filename = FUDEPOLYGONS_DIR + urllib.parse.unquote(url.split('/')[-1])
@@ -92,11 +83,16 @@ def rm_zfiles() -> None:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='番号を指定して筆ポリゴンファイルをダウンロードするスクリプト')
     parser.add_argument('--mode', help='全都道府県か否か')
+    parser.add_argument('--gcs', type=int, nargs='*')
     parser.add_argument('--pref_num', type=int, nargs='*')
     args = parser.parse_args()
-    if (args.mode == "all"):
+    if (args.mode == "all_dw_pref"):
         download_fudepolygon_files()
+        if (args.gcs == 1):
+            gcs = GcsController(storage.Client())
+            bucket = gcs.create_bucket("COLDLINE", "us-east-1")
+            gcs.upload_data_to_bucket(bucket.name)
     else:
         # 都道府県名を指定してファイルをダウンロードしたい時
         dwld_files_from_pref_num(args.pref_num)
-    rm_zfiles()
+    # rm_zfiles()
