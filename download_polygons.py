@@ -14,6 +14,9 @@ from gcs.gcs_controller import GcsController
 
 def download_file(url: str) -> str:
     filename = FUDEPOLYGONS_DIR + urllib.parse.unquote(url.split('/')[-1])
+    if (os.path.exists(filename)):
+        print("skip downloading. {} exists".format(filename))
+        return filename
     print('downloading {} ...'.format(filename))
     r = requests.get(url, stream=True)
     with open(filename, 'wb') as f:
@@ -57,7 +60,7 @@ def dwld_files_from_pref_num(pref_num) -> None:
         encoded_pref = urllib.parse.quote(PREFECTURES[idx - 1])
         pref_url = '{}{:02}{}{}.zip'.format(BASE_URL, idx, encoded_pref, YEAR)
         file_name = download_file(pref_url)
-        if (file_name):
+        if (file_name and is_unzip):
             unzip_file(file_name)
             print('unzipped {}'.format(file_name))
 
