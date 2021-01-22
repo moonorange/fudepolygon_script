@@ -11,11 +11,12 @@ import argparse
 import ipdb
 from constants import *
 from gcs.gcs_controller import GcsController
+from google.cloud import storage
 
 def download_file(url: str) -> str:
     filename = FUDEPOLYGONS_DIR + urllib.parse.unquote(url.split('/')[-1])
     if (os.path.exists(filename)):
-        print("skip downloading. {} exists".format(filename))
+        print("{} already exists".format(filename))
         return filename
     print('downloading {} ...'.format(filename))
     r = requests.get(url, stream=True)
@@ -87,15 +88,18 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='番号を指定して筆ポリゴンファイルをダウンロードするスクリプト')
     parser.add_argument('--mode', help='全都道府県か否か')
     parser.add_argument('--gcs', type=int)
+    parser.add_argument('--rm', type=int, default=0)
     parser.add_argument('--pref_num', type=int, nargs='*')
     args = parser.parse_args()
     if (args.mode == "all"):
         download_fudepolygon_files(0)
         if (args.gcs == 1):
-            gcs = GcsController(storage.Client())
+            strage_cl = storage.Client()
+            gcs = GcsController(strage_cl)
             bucket = gcs.create_bucket("COLDLINE", "us-east-1")
             gcs.upload_data_to_bucket(bucket.name)
     if (args.pref_num):
         # 都道府県名を指定してファイルをダウンロードしたい時
         dwld_files_from_pref_num(args.pref_num)
-    rm_zfiles()
+    if (args.rm):
+        rm_zfiles()

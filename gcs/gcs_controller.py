@@ -3,14 +3,16 @@ import glob
 from constants import *
 
 BUCKET_NAME = "fudepolygon_2020"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "env/general-storage-299702-51e03463833e.json"
 
 class GcsController:
 	def __init__(self, storage_cl):
 		self.storage_cl = storage_cl
 
 	def create_bucket(self, storage_class, location):
-		bucket = storage.bucket(BUCKET_NAME)
+		bucket = self.storage_cl.bucket(BUCKET_NAME)
 		bucket.storage_class = storage_class
+		self.storage_cl.get_bucket(BUCKET_NAME)
 		new_bucket = self.storage_cl.create_bucket(bucket, location=location)
 		print(
 			"Created bucket {} in {} with storage class {}".format
