@@ -1,7 +1,5 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
-*.py[cod]
-*$py.class
 
 # Mac
 .DS_Store
@@ -13,15 +11,8 @@ __pycache__/
 fudepolygon_data/
 *.zip
 
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
-
 # Environments
 .env
 .venv
 env/
 venv/
-ENV/
-env.bak/
-venv.bak/
