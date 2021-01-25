@@ -19,12 +19,15 @@ def download_file(url: str) -> str:
         print("{} already exists".format(filename))
         return filename
     print('downloading {} ...'.format(filename))
+    chunk_size = 1024
+    start_time = time.time()
     r = requests.get(url, stream=True)
     with open(filename, 'wb') as f:
-        for chunk in r.iter_content(chunk_size=1024):
+        for chunk in r.iter_content(chunk_size=chunk_size):
             if chunk:
                 f.write(chunk)
                 f.flush()
+        print("--- Finished in %s seconds with chunk_size %d---" % (time.time() - start_time, chunk_size))
         return filename
 
     # ファイルが開けなかった場合は False を返す
