@@ -88,7 +88,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='番号を指定して筆ポリゴンファイルをダウンロードするスクリプト')
     parser.add_argument('--mode', help='全都道府県か否か')
     parser.add_argument('--pref_num', type=int, nargs='*')
-    parser.add_argument('--gcs', type=int)
+    parser.add_argument('--gcs', type=int, default=0)
     parser.add_argument('--unzip', type=int, default=0)
     parser.add_argument('--rm', type=int, default=0)
     args = parser.parse_args()
@@ -98,7 +98,7 @@ if __name__ == "__main__":
     if (args.pref_num):
         # 都道府県名を指定してファイルをダウンロードしたい時
         dwld_files_from_pref_num(args.pref_num)
-    if (args.gcs == 1):
+    if (args.gcs):
         strage_cl = storage.Client()
         gcs = GcsController(strage_cl)
         bucket = gcs.create_bucket("COLDLINE", "us-east-1")

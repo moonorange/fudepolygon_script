@@ -9,7 +9,7 @@ BASE_URL = 'http://www.machimura.maff.go.jp/polygon/'
 
 FUDEPOLYGONS_DIR = 'fudepolygon_data/'
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "env/general-storage-299702-51e03463833e.json"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "env/general-storage-299702-e4dc4bbd7d8c.json"
 
 # HOKKAIDO_DIR = FUDEPOLYGONS_DIR + '01北海道{}/'.format(YEAR)
 # HOKKAIDO_GEO_CODES = ['11', '12', '13']
