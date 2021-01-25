@@ -39,5 +39,3 @@ python download_polygons.py --pref 北海道 大阪府 沖縄県　--unzip 1
 ```
 bash extract_and_upload_to_gcs.sh
 ```
-```じp
-```
