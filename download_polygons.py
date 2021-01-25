@@ -101,7 +101,7 @@ if __name__ == "__main__":
     if (args.gcs):
         strage_cl = storage.Client()
         gcs = GcsController(strage_cl)
-        # bucket = gcs.create_bucket("COLDLINE", "us-east-1")
+        bucket = gcs.create_bucket("COLDLINE", "us-east-1")
         gcs.upload_data_to_bucket("fudepolygon_2020")
     if (args.rm):
         rm_zfiles()
