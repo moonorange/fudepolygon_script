@@ -15,6 +15,7 @@ URLは2020年のものを前提としている。農水省の更新によってu
 
 ## venv作成、有効化、ライブラリインストール
 python3 -m venv .venv
+
 source .venv/bin/activate
 
 pip install -r requirements.txt
