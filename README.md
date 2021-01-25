@@ -21,8 +21,8 @@ pip install -r requirements.txt
 
 ## 実行
 
---modeで全都道府県のデータをインストールするか、gcsへuploadするかを指定する。
+--modeで全都道府県のデータをインストールするか、gcsへuploadするか、rmで解凍後のzipファイルを消すかどうかなどを指定する。
 
 ```
-python download_polygons.py --mode all --gcs 1
+python download_polygons.py --mode all --gcs 1 --rm 1
 ```
