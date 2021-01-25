@@ -9,7 +9,7 @@ gcsへのアップロードが必要な場合はコマンドライン引数で�
 # 注意
 
 URLは2020年のものを前提としている。農水省の更新によってurlが変わるかもしれないためその都度updateする必要がある。
-
+基本的にはYEAR定数を変更すれば大丈夫なはず。
 
 # 使用
 
@@ -21,8 +21,13 @@ pip install -r requirements.txt
 
 ## 実行
 
---modeで全都道府県のデータをインストールするか、gcsへuploadするか、rmで解凍後のzipファイルを消すかどうかなどを指定する。
+全都道府県のデータをインストールするか、zipを解凍するか、gcsへuploadするか、rmで解凍後のzipファイルを消すかどうかなどコマンドライン引数で指定する。
+指定しない場合はfalseになる。
 
 ```
-python download_polygons.py --mode all --gcs 1 --rm 1
+python download_polygons.py --pref all --unzip 1 --gcs 0 --rm 1
+```
+
+```
+python download_polygons.py --pref 北海道 大阪府 沖縄県　--unzip 1
 ```
