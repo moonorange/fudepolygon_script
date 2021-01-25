@@ -60,12 +60,13 @@ def download_fudepolygon_files(is_unzip: int) -> None:
             unzip_file(file_name)
 
 #　都道府県名を指定してファイルをダウンロードする関数
-def dwld_files_from_pref_num(pref_num, is_unzip: int) -> None:
+def dwld_specific_files(pref_names, is_unzip: int) -> None:
     if not os.path.isdir(FUDEPOLYGONS_DIR):
         os.makedirs(FUDEPOLYGONS_DIR)
-    for idx in pref_num:
-        encoded_pref = urllib.parse.quote(PREFECTURES[idx - 1])
-        pref_url = '{}{:02}{}{}.zip'.format(BASE_URL, idx, encoded_pref, YEAR)
+    for pref_name in pref_names:
+        idx = PREFECTURES.index(pref_name)
+        encoded_pref = urllib.parse.quote(pref_name)
+        pref_url = '{}{:02}{}{}.zip'.format(BASE_URL, idx + 1, encoded_pref, YEAR)
         file_name = download_file(pref_url)
         if (file_name and is_unzip):
             unzip_file(file_name)
@@ -90,21 +91,19 @@ def rm_zfiles() -> None:
 #         os.rmdir(HOKKAIDO_DIR)
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='番号を指定して筆ポリゴンファイルをダウンロードするスクリプト')
-    parser.add_argument('--mode', help='全都道府県か否か')
-    parser.add_argument('--pref_num', type=int, nargs='*')
+    parser = argparse.ArgumentParser(description='筆ポリゴンファイルをダウンロードしたりgcsにuploadするスクリプト')
+    parser.add_argument('--pref', type=str, nargs='*', help='ダウンロードしたい都道府県名を正確に入力、全部の場合はallを指定')
     parser.add_argument('--gcs', type=int, default=0)
     parser.add_argument('--unzip', type=int, default=0)
     parser.add_argument('--rm', type=int, default=0)
     args = parser.parse_args()
 
-
-    if (args.mode == "all"):
+    if (args.pref[0] == "all"):
         # 全都道府県
         download_fudepolygon_files(args.unzip)
-    if (args.pref_num):
-        # 都道府県名を指定してファイルをダウンロードしたい時
-        dwld_files_from_pref_num(args.pref_num)
+    else:
+        # 都道府県名を指定してファイルをダウンロードする
+        dwld_specific_files(args.pref, args.unzip)
     if (args.gcs):
         # gcsにアップロード
         strage_cl = storage.Client()
