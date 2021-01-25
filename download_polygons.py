@@ -75,6 +75,8 @@ def rm_zfiles() -> None:
     for path in glob.iglob('{}*.zip'.format(FUDEPOLYGONS_DIR)):
         os.remove(path)
 
+# 筆ポリupadateで不必要になった関数、念のため残しておく
+
 # 北海道の入れ子になっているzip fileをfudepolygons配下に解凍
 # def unzip_hokkaido_files() -> None:
 #     for geo_code in HOKKAIDO_GEO_CODES:
@@ -104,7 +106,7 @@ if __name__ == "__main__":
     else:
         # 都道府県名を指定してファイルをダウンロードする
         dwld_specific_files(args.pref, args.unzip)
-    if (args.gcs):
+    if (args.gcs and args.unzip == 0):
         # gcsにアップロード
         strage_cl = storage.Client()
         gcs = GcsController(strage_cl)
