@@ -33,10 +33,6 @@ def upload_data_to_bucket(storage_cl, bucket_name: str, source_dir: str=SOURCE_D
 
 
 if __name__ == "__main__":
-	parser = argparse.ArgumentParser(description='gcsにデータをuplodするスクリプト')
-	parser.add_argument('--source_dir', type=str, help='データがあるpath')
-	args = parser.parse_args()
-	# gcsにアップロード
 	strage_cl = storage.Client()
 	bucket = create_bucket(strage_cl, STORAGE_CLASS, LOCATION)
-	upload_data_to_bucket(strage_cl, bucket.name, args.source_dir)
+	upload_data_to_bucket(strage_cl, bucket.name)
