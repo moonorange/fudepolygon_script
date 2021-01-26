@@ -79,8 +79,8 @@ def rm_zfiles() -> None:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='筆ポリゴンファイルをダウンロードしたりgcsにuploadするスクリプト')
-    parser.add_argument('--pref', required=True, type=str, nargs='*', help='ダウンロードしたい都道府県名を正確に入力、全部の場合はallを指定')
-    parser.add_argument('--unzip', type=int, default=0,  help='zipを解凍する場合は1を指定')
+    parser.add_argument('--pref', required=True, type=str, nargs='*', help='ダウンロードしたい都道府県名を任意数正確に入力、全部の場合はallを指定')
+    parser.add_argument('--unzip', type=int, default=0,  help='zipファイルを解凍する場合は1を指定')
     parser.add_argument('--rm', type=int, default=0, help='zipファイルを消す場合は1を指定')
     args = parser.parse_args()
 
