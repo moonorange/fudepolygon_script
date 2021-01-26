@@ -24,14 +24,14 @@ pip install -r requirements.txt
 ## 実行
 
 全都道府県のデータをインストールするか、zipを解凍するか、rmで解凍後のzipファイルを消すかどうかなどコマンドライン引数で指定する。
-指定しない場合は0になる。
+指定しない場合はfalseになる。
 
 ```
-python download_polygons.py --pref all --unzip 1 --rm 1
+python download_polygons.py -pref all -unzip -rm
 ```
 
 ```
-python download_polygons.py --pref 北海道 大阪府 沖縄県　--unzip 1
+python download_polygons.py -pref 北海道 大阪府 沖縄県
 ```
 
 筆ポリzipを取得してgcsへアップロードする場合
