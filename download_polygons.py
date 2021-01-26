@@ -84,12 +84,15 @@ if __name__ == "__main__":
     parser.add_argument('--rm', type=int, default=0)
     args = parser.parse_args()
 
-    if (args.pref[0] == "all"):
-        # 全都道府県
-        download_fudepolygon_files(args.unzip)
+    if (args.pref):
+        if (args.pref[0] == "all"):
+            # 全都道府県
+            download_fudepolygon_files(args.unzip)
+        else:
+            # 都道府県名を指定してファイルをダウンロードする
+            download_fudepolygon_files(args.unzip, args.pref)
+        if (args.rm):
+            # zipfileを消す
+            rm_zfiles()
     else:
-        # 都道府県名を指定してファイルをダウンロードする
-        download_fudepolygon_files(args.unzip, args.pref)
-    if (args.rm):
-        # zipfileを消す
-        rm_zfiles()
+        print("--pref引数を指定してください")
