@@ -24,7 +24,7 @@ pip install -r requirements.txt
 ## 実行
 
 全都道府県のデータをインストールするか、zipを解凍するか、rmで解凍後のzipファイルを消すかどうかなどコマンドライン引数で指定する。
-指定しない場合はfalseになる。
+指定しない場合は0になる。
 
 ```
 python download_polygons.py --pref all --unzip 1 --rm 1
