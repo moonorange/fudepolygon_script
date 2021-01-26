@@ -2,9 +2,9 @@
 
 fudepoly_path="fudepolygon_data/*"
 dirs=`find $fudepoly_path -name *.shp`
-total_num=`find . -name *.shp | wc -l`
 
 i=0
+mkdir csv
 for path in $dirs;
 do
 	filename=`basename $path .shp`
