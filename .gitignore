@@ -16,3 +16,5 @@ fudepolygon_data/
 .venv
 env/
 venv/
+
+csv/

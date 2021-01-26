@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 
 fudepoly_path="fudepolygon_data/*"
 dirs=`find $fudepoly_path -name *.shp -o -name *.dbf -o -name *.prj -o -name *.shx`
