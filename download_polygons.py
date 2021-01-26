@@ -79,20 +79,17 @@ def rm_zfiles() -> None:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='筆ポリゴンファイルをダウンロードしたりgcsにuploadするスクリプト')
-    parser.add_argument('--pref', type=str, nargs='*', help='ダウンロードしたい都道府県名を正確に入力、全部の場合はallを指定')
-    parser.add_argument('--unzip', type=int, default=0)
-    parser.add_argument('--rm', type=int, default=0)
+    parser.add_argument('--pref', required=True, type=str, nargs='*', help='ダウンロードしたい都道府県名を正確に入力、全部の場合はallを指定')
+    parser.add_argument('--unzip', type=int, default=0,  help='zipを解凍する場合は1を指定')
+    parser.add_argument('--rm', type=int, default=0, help='zipファイルを消す場合は1を指定')
     args = parser.parse_args()
 
-    if (args.pref):
-        if (args.pref[0] == "all"):
-            # 全都道府県
-            download_fudepolygon_files(args.unzip)
-        else:
-            # 都道府県名を指定してファイルをダウンロードする
-            download_fudepolygon_files(args.unzip, args.pref)
-        if (args.rm):
-            # zipfileを消す
-            rm_zfiles()
+    if (args.pref[0] == "all"):
+        # 全都道府県
+        download_fudepolygon_files(args.unzip)
     else:
-        print("--pref引数を指定してください")
+        # 都道府県名を指定してファイルをダウンロードする
+        download_fudepolygon_files(args.unzip, args.pref)
+    if (args.rm):
+        # zipfileを消す
+        rm_zfiles()
