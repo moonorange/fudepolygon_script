@@ -3,7 +3,6 @@
 fudepoly_path="fudepolygon_data/*"
 dirs=`find $fudepoly_path -name *.shp -o -name *.dbf -o -name *.prj -o -name *.shx`
 
-i=0
 for path in $dirs;
 do
 	filename=`basename $path`
@@ -12,5 +11,7 @@ do
 	newpath="${dirname}/${nonum}"
 	mv $path "$newpath"
 	echo $newpath
-	let i++
 done
+
+echo
+echo "finish renaming all files"
