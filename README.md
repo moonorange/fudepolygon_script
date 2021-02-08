@@ -25,13 +25,14 @@ pip install -r requirements.txt
 
 全都道府県のデータをインストールするか、zipを解凍するか、rmで解凍後のzipファイルを消すかどうかなどコマンドライン引数で指定する。
 指定しない場合はfalseになる。
+どこにデータを保存したいかも必ず指定する
 
 ```
-python download_polygons.py -pref all -unzip -rm
+python download_polygons.py -pref all -unzip -rm -dir ~/Downloads/fudepoly/
 ```
 
 ```
-python download_polygons.py -pref 北海道 大阪府 沖縄県
+python download_polygons.py -pref 北海道 大阪府 沖縄県 -dir ~/Downloads/fudepoly/
 ```
 
 筆ポリzipを取得してgcsへアップロードする場合
