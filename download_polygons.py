@@ -56,9 +56,10 @@ def download_fudepolygon_files(is_unzip: int, pref_list=PREFECTURES, fudepoly_di
         if (file_name and is_unzip):
             unzip_file(file_name, fudepoly_dir)
 
-def rm_zfiles() -> None:
-    for path in glob.iglob('{}*.zip'.format(FUDEPOLYGONS_DIR)):
+def rm_zfiles(fudepoly_dir: str = FUDEPOLYGONS_DIR) -> None:
+    for path in glob.iglob('{}*.zip'.format(fudepoly_dir)):
         os.remove(path)
+        print("removed {}".format(path))
 
 # 筆ポリupadateで不必要になった関数、念のため残しておく
 
@@ -93,4 +94,4 @@ if __name__ == "__main__":
         download_fudepolygon_files(args.unzip, args.pref, args.dir)
     if (args.rm):
         # zipfileを消す
-        rm_zfiles()
+        rm_zfiles(args.dir)
