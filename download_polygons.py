@@ -87,7 +87,7 @@ if __name__ == "__main__":
 
     if (args.pref[0] == "all"):
         # 全都道府県
-        download_fudepolygon_files(args.unzip, args.dir)
+        download_fudepolygon_files(is_unzip=args.unzip, fudepoly_dir=args.dir)
     else:
         # 都道府県名を指定してファイルをダウンロードする
         download_fudepolygon_files(args.unzip, args.pref, args.dir)
