@@ -6,7 +6,6 @@ import glob
 import re
 import os
 import argparse
-import ipdb
 from constants import *
 
 def download_file(url: str, fudepoly_dir: str) -> str:
@@ -45,7 +44,7 @@ def unzip_file(filename: str, fudepoly_dir: str) -> None:
         zfile.extract(info, fudepoly_dir)
     print('unzipped {}'.format(filename))
 
-def download_fudepolygon_files(is_unzip: int, pref_list=PREFECTURES, fudepoly_dir: str = FUDEPOLYGONS_DIR) -> None:
+def download_fudepolygon_files(is_unzip: bool, fudepoly_dir: str, pref_list=PREFECTURES) -> None:
     if not os.path.isdir(fudepoly_dir):
         os.makedirs(fudepoly_dir)
     for pref in (pref_list):
@@ -56,7 +55,7 @@ def download_fudepolygon_files(is_unzip: int, pref_list=PREFECTURES, fudepoly_di
         if (file_name and is_unzip):
             unzip_file(file_name, fudepoly_dir)
 
-def rm_zfiles(fudepoly_dir: str = FUDEPOLYGONS_DIR) -> None:
+def rm_zfiles(fudepoly_dir: str) -> None:
     for path in glob.iglob('{}*.zip'.format(fudepoly_dir)):
         os.remove(path)
         print("removed {}".format(path))
@@ -81,7 +80,7 @@ def rm_zfiles(fudepoly_dir: str = FUDEPOLYGONS_DIR) -> None:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='筆ポリゴンファイルをダウンロードしたりgcsにuploadするスクリプト')
     parser.add_argument('-pref', required=True, type=str, nargs='*', help='ダウンロードしたい都道府県名を任意数正確に入力、全部の場合はallを指定')
-    parser.add_argument('-dir', required=True, type=str, help='筆ポリデータを保存する階層')
+    parser.add_argument('-dir', default=FUDEPOLYGONS_DIR, type=str, help='筆ポリデータを保存する階層')
     parser.add_argument('-unzip', action='store_true', help='zipファイルを解凍する場合は指定')
     parser.add_argument('-rm', action='store_true', help='zipファイルを消す場合は指定')
     args = parser.parse_args()
@@ -91,7 +90,7 @@ if __name__ == "__main__":
         download_fudepolygon_files(is_unzip=args.unzip, fudepoly_dir=args.dir)
     else:
         # 都道府県名を指定してファイルをダウンロードする
-        download_fudepolygon_files(args.unzip, args.pref, args.dir)
+        download_fudepolygon_files(is_unzip=args.unzip, fudepoly_dir=args.dir, pref_list=args.pref)
     if (args.rm):
         # zipfileを消す
         rm_zfiles(args.dir)

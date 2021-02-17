@@ -25,7 +25,7 @@ pip install -r requirements.txt
 
 全都道府県のデータをインストールするか、zipを解凍するか、rmで解凍後のzipファイルを消すかどうかなどコマンドライン引数で指定する。
 指定しない場合はfalseになる。
-どこにデータを保存したいかも必ず指定する
+データの保存先も指定できる。defaultは./fudepolygon_data/
 
 ```
 python download_polygons.py -pref all -unzip -rm -dir ~/Downloads/fudepoly/
