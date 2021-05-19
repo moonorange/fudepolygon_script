@@ -1,6 +1,7 @@
 # fudepolygon_script
 
 筆ポリゴンzipファイルをwebからダウンロードし解凍し、最後に不要になったzipファイルを消すスクリプト。
+1都道府県をダウンロードするだけなら直接pageにいってダウンロードしたほうが速い。
 指定のdirに筆ポリゴンzipファイルが解凍されたものが残る。
 
 gcsへのアップロードが必要な場合はenv/にservice accountのkeyであるjsonファイルを配置する必要がある。
@@ -9,6 +10,7 @@ https://cloud.google.com/storage/docs/reference/libraries#client-libraries-insta
 # 注意
 
 URLは2020年のものを前提としている。農水省の更新によってurlが変わるかもしれないためその都度updateする必要がある。
+参考→https://www.maff.go.jp/j/tokei/porigon/hudeporidl.html
 
 基本的にはYEAR定数を変更すれば大丈夫なはず。
 
