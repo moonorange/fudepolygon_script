@@ -1,7 +1,9 @@
 # fudepolygon_script
 
 筆ポリゴンzipファイルをwebからダウンロードし解凍し、最後に不要になったzipファイルを消すスクリプト。
+
 1都道府県をダウンロードするだけなら直接pageにいってダウンロードしたほうが速い。
+
 指定のdirに筆ポリゴンzipファイルが解凍されたものが残る。
 
 gcsへのアップロードが必要な場合はenv/にservice accountのkeyであるjsonファイルを配置する必要がある。
@@ -29,6 +31,7 @@ pip install -r requirements.txt
 
 全都道府県のデータをインストールするか、zipを解凍するか、rmで解凍後のzipファイルを消すかどうかなどコマンドライン引数で指定する。
 指定しない場合はfalseになる。
+
 データの保存先も指定できる。defaultは./fudepolygon_data/
 
 ```
