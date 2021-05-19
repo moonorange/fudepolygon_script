@@ -9,7 +9,9 @@ https://cloud.google.com/storage/docs/reference/libraries#client-libraries-insta
 # 注意
 
 URLは2020年のものを前提としている。農水省の更新によってurlが変わるかもしれないためその都度updateする必要がある。
+
 基本的にはYEAR定数を変更すれば大丈夫なはず。
+
 基本的には一年前の年号が最新(2021年の場合は2020年が最新)
 
 # 使用
