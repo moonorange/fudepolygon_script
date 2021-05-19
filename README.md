@@ -1,8 +1,7 @@
 # fudepolygon_script
 
 筆ポリゴンzipファイルをwebからダウンロードし解凍し、最後に不要になったzipファイルを消すスクリプト。
-定数FUDEPOLYGONS_DIR配下に全ての都道府県のzipファイルが解凍されたものが残る。
-北海道の入れ子になっているzipもFUDEPOLYGONS_DIR配下に展開される。
+指定のdirに筆ポリゴンzipファイルが解凍されたものが残る。
 
 gcsへのアップロードが必要な場合はenv/にservice accountのkeyであるjsonファイルを配置する必要がある。
 https://cloud.google.com/storage/docs/reference/libraries#client-libraries-install-python
@@ -11,6 +10,7 @@ https://cloud.google.com/storage/docs/reference/libraries#client-libraries-insta
 
 URLは2020年のものを前提としている。農水省の更新によってurlが変わるかもしれないためその都度updateする必要がある。
 基本的にはYEAR定数を変更すれば大丈夫なはず。
+基本的には一年前の年号が最新(2021年の場合は2020年が最新)
 
 # 使用
 
